@@ -50,7 +50,7 @@ int main() {
 
     Log::log(Log::Level::INFO,    "started logging");
     Log::log(Log::Level::WARNING, "memory allocated");
-    Log::log(Log::Level::ERROR,   "couldn't open file");
+    Log::log(Log::Level::ERR,   "couldn't open file");
     Log::setConsoleLevel(Log::Level::INFO);
     Log::log(Log::Level::INFO,    "updated log level");
     Log::setConsoleLevel(Log::Level::ERROR);
