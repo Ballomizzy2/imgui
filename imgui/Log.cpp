@@ -89,9 +89,10 @@ void Log::log(Level level, const std::string& msg) { // function to log the mess
 
     toDebugger(s);
 
+    // uncomment this for thread management
     // to not overload the console we should consider keeping logs to a thresold
     // // Console: respect current threshold
     // if (static_cast<int>(level) >= static_cast<int>(s_consoleLevel)) {
     //     toDebugger(s);
-    // } would use later
+    // } 
 }
