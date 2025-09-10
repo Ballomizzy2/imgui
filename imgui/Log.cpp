@@ -14,7 +14,7 @@ namespace {
     Log::Level    s_consoleLevel = Log::Level::INFO;
     std::mutex    s_mutex;
 
-    const char* levelStr(Log::Level l) {
+    const char* levelStr(Log::Level l) { // types of log with different levels (i added fatal for memory-scary warnings)
         switch (l) {
             case Log::Level::TRACE:   
                 return "TRACE";
@@ -24,9 +24,9 @@ namespace {
                 return "INFO";
             case Log::Level::WARNING: 
                 return "WARNING";
-            case Log::Level::ERR:   
+            case Log::Level::ERR:   //ERROR for some reason, using ERROR gives an error while compiling, i assume it is a reserved-keyword 
                 return "ERROR";
-            case Log::Level::FATAL:   
+            case Log::Level::FATAL:   // VERY BAD ERROR message
                 return "FATAL";
         }
         return "";
@@ -47,6 +47,7 @@ namespace {
         return os.str();
     }
 
+    // code to make the debugger output stuff for us
     void toDebugger(const std::string& s) {
         #ifdef _WIN32
             OutputDebugStringA(s.c_str());
@@ -56,6 +57,7 @@ namespace {
     }
 }
 
+// this initialies the debugger window
 void Log::initialize(Level consoleLevel, const char* fileName) {
     std::lock_guard<std::mutex> g(s_mutex);
     s_consoleLevel = consoleLevel;
@@ -66,7 +68,7 @@ void Log::initialize(Level consoleLevel, const char* fileName) {
     toDebugger("Logging Initialized\n");
 }
 
-void Log::shutdown() { //
+void Log::shutdown() { //ends the logging in file
     std::lock_guard<std::mutex> g(s_mutex);
     if (s_file.is_open()) { s_file.flush(); s_file.close(); }
 }
@@ -82,7 +84,7 @@ void Log::log(Level level, const std::string& msg) { // function to log the mess
     line << stamp() << " [" << levelStr(level) << "] " << msg << "\n";
     const std::string s = line.str();
 
-    // File: always record everything
+    // File: always record everything when running
     if (s_file.is_open()) { s_file << s; s_file.flush(); }
 
     toDebugger(s);
@@ -91,5 +93,5 @@ void Log::log(Level level, const std::string& msg) { // function to log the mess
     // // Console: respect current threshold
     // if (static_cast<int>(level) >= static_cast<int>(s_consoleLevel)) {
     //     toDebugger(s);
-    // }
+    // } would use later
 }
