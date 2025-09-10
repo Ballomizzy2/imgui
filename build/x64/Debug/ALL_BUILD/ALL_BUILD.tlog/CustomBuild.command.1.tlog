@@ -1,0 +1,10 @@
+^C:\USERS\OWNER\DOCUMENTS\SCHOOL\ADVGAMEDEV\IMGUI\IMGUI\IMGUI\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Owner/Documents/School/AdvGameDev/imgui/imgui/imgui -BC:/Users/Owner/Documents/School/AdvGameDev/imgui/imgui/build --check-stamp-file C:/Users/Owner/Documents/School/AdvGameDev/imgui/imgui/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
